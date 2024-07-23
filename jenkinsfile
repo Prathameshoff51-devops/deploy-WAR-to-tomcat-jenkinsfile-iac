@@ -23,7 +23,9 @@ pipeline{
 
                 stage("Deploying on Test."){
             steps{
-                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://3.129.57.149:8080')], contextPath: '/app', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://3.129.57.149:8080')], contextPath: '/app', war: '**/*.war'  
+                //goto generate script=> WAR file- **/*.war, contaxpath - //app, credentionls - add (for cred- /opt/tomcat/conf/ tomcat-user.xml- vi file and add<user username="admin" password="admin" roles="manager-gui, manager-script, manager-jmx, manager-status"/> )
+                //tomcat servr url - http://3.129.57.149:8080 => generate script
                 echo "========Deployed on Test========"
             }
 
