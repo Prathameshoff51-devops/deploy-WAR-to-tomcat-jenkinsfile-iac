@@ -1,0 +1,51 @@
+pipeline{
+    agent any
+    tools{
+        maven 'Maven'  //goto->tools onfig-> you can see Maven name as a target so ot will automaticlly name version mentioned there.
+    } 
+
+    stages{
+        stage("Test"){
+            steps{
+                sh 'mvn test'
+                echo "========executing  Test========"
+            }
+
+        }
+
+                stage("Build"){
+            steps{
+                sh 'mvn install'
+                echo "========executing Build========"
+            }
+
+        }
+
+                stage("Deploying on Test."){
+            steps{
+                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://3.129.57.149:8080')], contextPath: '/app', war: '**/*.war'
+                echo "========Deployed on Test========"
+            }
+
+        }
+
+                stage("Deploying on Prod."){
+            steps{
+                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://3.129.57.149:8080')], contextPath: '/app', war: '**/*.war'
+                echo "========Deployed on Prod.========"
+            }
+
+        }
+    }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
+}
