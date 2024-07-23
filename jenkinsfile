@@ -15,7 +15,8 @@ pipeline{
 
                 stage("Build"){
             steps{
-                sh 'mvn configure'
+                sh 'mvn configure'    //or check with mvn install 
+                //here no need to cpy our WAR file on nex step becaz everthing is running on single workspace only but in previous videos every step as different workspce thats why need to move WAR files to next job.
                 echo "========executing Build========"
             }
 
